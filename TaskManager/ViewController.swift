@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var collectionView:UICollectionView!
     
     @IBOutlet weak var topView:UIView!
-    @IBOutlet weak var taskAssignerView:UIView!
+    @IBOutlet weak var taskAssignerView:UIImageView!
+    @IBOutlet weak var veil:UIView!
     
     let circleView = UIView()
     var userViews:[UIImageView] = []
@@ -50,6 +51,11 @@ class ViewController: UIViewController {
         taskAssignerView.isHidden = true
         taskAssignerView.backgroundColor = #colorLiteral(red: 0.9847621145, green: 0.9087638506, blue: 0.2039215686, alpha: 1)
         taskAssignerView.layer.cornerRadius = UIConstants.smallCircleRadius/2
+        taskAssignerView.image = UIImage(named: "grayCross")
+        taskAssignerView.layer.masksToBounds = true
+      
+        
+    
         
         let bigRadius = UIConstants.bigCircleTaskAssignerRadius
         let userRadius = UIConstants.userImageRadius
@@ -69,32 +75,16 @@ class ViewController: UIViewController {
             let userview = UIImageView()
             userview.frame.size = CGSize(width:userRadius,height:userRadius)
             userview.frame.origin = CGPoint(x: frame.origin.x, y: frame.origin.y)
+            let name = "user\(i)"
+            userview.image = UIImage(named:name)
+            userview.layer.cornerRadius = userRadius/2
+            userview.layer.borderColor = #colorLiteral(red: 0.9847621145, green: 0.9087638506, blue: 0.2039215686, alpha: 1)
+            userview.layer.borderWidth = 2.0
+            userview.layer.masksToBounds = true
+            userview.isHidden = true
             
-            switch i{
-            case 1:
-                //userview.frame.origin = CGPoint(x: circleView.frame.origin.x-userRadius/2, y: circleView.frame.origin.y+bigRadius/2-userRadius/2)
-                
-                userview.image = UIImage(named: "user1")
-            case 2:
-                //userview.frame.origin = CGPoint(x: circleView.frame.origin.x+bigRadius/2-userRadius/2, y: circleView.frame.origin.y-userRadius/2)
-                userview.image = UIImage(named: "user3")
-            case 3:
-               // userview.frame.origin = CGPoint(x: circleView.frame.origin.x+bigRadius-userRadius/2, y: circleView.frame.origin.y+bigRadius/2-userRadius/2)
-                userview.image = UIImage(named: "user2")
-            default:
-               // userview.frame.origin = CGPoint(x: circleView.frame.origin.x+bigRadius/2-userRadius/2, y: circleView.frame.origin.y+bigRadius-userRadius/2)
-                userview.image = UIImage(named: "user4")
-                
-            }
-            
-        userview.layer.cornerRadius = userRadius/2
-        userview.layer.borderColor = #colorLiteral(red: 0.9847621145, green: 0.9087638506, blue: 0.2039215686, alpha: 1)
-        userview.layer.borderWidth = 2.0
-        userview.layer.masksToBounds = true
-        userview.isHidden = true
-            
-        self.userViews.append(userview)
-        self.view.addSubview(userview)
+            self.userViews.append(userview)
+            self.view.addSubview(userview)
             
         }
         
@@ -127,24 +117,7 @@ class ViewController: UIViewController {
         
         
     }
-    
-    func animateBigCircleView(){
-         self.circleView.alpha = 0.0
-        UIView.animate(withDuration :1.0, delay:0.1,options:.curveEaseOut,animations:{
-          self.circleView.alpha = 1.0
-//            for userview in self.userViews{
-//
-//                userview.alpha = 1.0
-//            }
-        
-        },completion:{finised in
-            
-            self.animateusers()
-            
-            
-        })
-        
-    }
+
     
     func animateusers(){
         
@@ -168,7 +141,7 @@ class ViewController: UIViewController {
                     userview.frame.origin = CGPoint(x:  self.circleView.frame.origin.x+bigRadius-userRadius/2, y:  self.circleView.frame.origin.y+bigRadius/2-userRadius/2)
                     //userview.image = UIImage(named: "user2")
                 default:
-                    userview.frame.origin = CGPoint(x:  self.circleView.frame.origin.x+bigRadius/2-userRadius/2, y:  self.circleView.frame.origin.y+bigRadius-userRadius/2)
+                    userview.frame.origin = CGPoint(x:  self.circleView.frame.origin.x+bigRadius/2-userRadius/2, y:  self.circleView.frame.origin.y+bigRadius-userRadius/2-10)
                     //userview.image = UIImage(named: "user4")
                     
                 }
@@ -229,7 +202,16 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
          let borderLayer = cell.circleView.addExternalBorder(borderWidth: 2.0, borderColor: .black)
         cell.circleView.layer.addSublayer(borderLayer)
         cell.bringSubviewToFront(cell.circleView)
+        //veil.isHidden = false
         showTaskAssignerView()
+        
+        for  nonSelCell in tableView.visibleCells{
+            var nonselectedCell:TableViewCell = nonSelCell as! TableViewCell
+            if nonselectedCell != cell{
+                nonselectedCell.cellDisablerView.isHidden = false
+                nonselectedCell.isUserInteractionEnabled = false
+            }
+        }
         
     
     }

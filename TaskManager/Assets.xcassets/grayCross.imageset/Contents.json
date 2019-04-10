@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "user1.jpeg",
+      "filename" : "cross-3.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "user1-2.jpeg",
+      "filename" : "cross-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "user-3.jpeg",
+      "filename" : "cross-2.png",
       "scale" : "3x"
     }
   ],

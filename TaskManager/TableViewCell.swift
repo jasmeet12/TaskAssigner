@@ -17,6 +17,7 @@ class TableViewCell:UITableViewCell{
     @IBOutlet weak var expandButton:UIButton!
     @IBOutlet weak var userImage:UIImageView!
     @IBOutlet weak var sideLine:UIView!
+    @IBOutlet weak var cellDisablerView:UIView!
     
     
     override func awakeFromNib() {
